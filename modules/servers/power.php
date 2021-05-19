@@ -9,6 +9,6 @@ function RebootDevice(){
 }
 function UpdateFromGit(){
     SaveSettingVar("check_for_update",0);
-    echo shell_exec("git pull");
+    echo shell_exec("sh /var/www/html/gitpull.sh");
 }
 ?>
