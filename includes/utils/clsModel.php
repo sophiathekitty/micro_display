@@ -15,7 +15,7 @@ class clsModel {
             clsDB::$db_g->install_table($this->table_name,$this->fields);
         }
         $table = clsDB::$db_g->describe_table($this->table_name);
-        print_r($table);
+        //print_r($table);
         $after = "";
         // check for missing or changed fields
         foreach($this->fields as $field){
@@ -70,18 +70,40 @@ class clsModel {
         if(count($rows) > 0) return $rows[0];
         return null;
     }
+    public function LoadWhere($where){
+        $rows = clsDB::$db_g->safe_select($this->table_name,$where);
+        if(count($rows) > 0) return $rows[0];
+        return null;
+    }
+    public function LoadAllWhere($where){
+        return clsDB::$db_g->safe_select($this->table_name,$where);
+    }
 
+    public function Save($data,$where = null){
+        // check for matching record
+        $row = $this->LoadWhere($where);
+        $id = null;
+        if(is_null($row)){
+            // record doesn't exist insert a new one
+            $id = clsDB::$db_g->safe_insert($this->table_name,$data,$where);
+        } else {
+            // record already exists so update it
+            $id = clsDB::$db_g->safe_update($this->table_name,$data,$where);
+            $row = $this->LoadWhere($where);
+        }
+        return ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'row'=>$row];
+    }
 
     // this needs to be overwritten by the individual models
     public $table_name = "Example";
     public $fields = [
         [
             "Field"=>"id",
-            "Type"=>"id",
-            "Null"=>"id",
-            "Key"=>"",
+            "Type"=>"int(11)",
+            "Null"=>"NO",
+            "Key"=>"PRI",
             "Default"=>"",
-            "Extra"=>""
+            "Extra"=>"auto_increment"
         ]
     ];
 }

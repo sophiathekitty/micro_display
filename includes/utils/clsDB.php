@@ -70,7 +70,7 @@ if(!defined('MYSQL_CLASS')){
 			$sql .= ";";
 			return $this->select($sql);
 		}
-		function safe_insert($table, $data, $where = ""){ // generates a sanitized insert command 
+		function safe_insert($table, $data, $where = null){ // generates a sanitized insert command 
 			/*
 				$date is required to be a keyed array. 
 				
@@ -100,10 +100,17 @@ if(!defined('MYSQL_CLASS')){
 						$values .= "'$value'";
 				}
 			}
+			$where_txt = "";
+			if(!is_null($where)){
+				$where = preg_replace($regex,$replace,$where);
+				foreach($where as $key => $value){
+					$where_txt .= " `$key` = '$value'";
+				}
+			}
 			if($where == "")
 				$sql = "INSERT INTO `$table` ($structure) VALUES ($values)";
 			else 
-				$sql = "REPLACE INTO `$table` ($structure) VALUES ($values) WHERE $where";
+				$sql = "REPLACE INTO `$table` ($structure) VALUES ($values) WHERE $where_txt";
 			return $this->insert($sql);
 		}
 		function safe_update($table, $data, $where = NULL){ // generates a sanitized update command 
@@ -130,6 +137,7 @@ if(!defined('MYSQL_CLASS')){
 			}
 			$sql .= "WHERE ";
 			if($where){
+				$where = preg_replace($regex,$replace,$where);
 				foreach($where as $key => $value){
 					$sql .= "`$key` = '$value'";
 				}
