@@ -52,7 +52,7 @@ if(!defined('NUMBERS_CLASS')){
 		}
 	}
 	class clsNumberDate extends clsNumber {
-		public function clsNumberDate($datetime){
+		public function __construct($datetime){
 			$this->raw_value = $this->value = $datetime;
 			$now = time();
 			$date = strtotime($datetime);
@@ -108,7 +108,7 @@ if(!defined('NUMBERS_CLASS')){
 	}
 	class clsNumberLength extends clsNumber {
 		private $metric;
-		public function clsNumberLength($value,$metric = true){
+		public function __construct($value,$metric = true){
 			$this->metric = $metric;
 			$this->raw_value = $value;
 			if($metric){
@@ -173,7 +173,7 @@ if(!defined('NUMBERS_CLASS')){
 		}
 	}
 	class clsNumberVolume extends clsNumber {
-		public function clsNumberVolume($value){
+		public function __construct($value){
 			$this->scaled_value = $this->raw_value = $value;
 			if($value < 0.00390625){
 				$this->value = $value * 768;
@@ -207,7 +207,7 @@ if(!defined('NUMBERS_CLASS')){
 		
 	}
 	class clsNumberMass extends clsNumber {
-		public function clsNumberMass($value){
+		public function __construct($value){
 			$this->scaled_value = $this->raw_value = $value;
 			if($value == 0){
 				$this->value = $value;
@@ -262,7 +262,7 @@ if(!defined('NUMBERS_CLASS')){
 		public $width_scaled;
 		public $height_scaled;
 		private $metric;
-		public function clsNumberArea($width,$height,$metric){
+		public function __construct($width,$height,$metric){
 			$this->metric = $metric;
 			$this->width_raw = $width;
 			$this->height_raw = $height;

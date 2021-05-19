@@ -13,7 +13,7 @@ class clsImage {
 	var $imageTypes;
 	var $loaded;
 	// constructor
-	function clsImage(){
+	function __construct(){
 		$this->loaded = false;
 		$this->max_size = 100000000;
 		$this->imageTypes = array(

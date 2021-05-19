@@ -13,8 +13,8 @@ if(!defined('MYSQL_CLASS')){
 		private $id;
 		
 		public static $db_g;
-						
-		function clsDB($dbname, $username, $password){
+		
+		function __construct($dbname, $username, $password){
 			$this->database = $dbname;
 			$this->db = @mysqli_connect('localhost', $username, $password) 
 				or die("Unable to connect to the DB server! ERROR: " . mysqli_errno($this->db) . " <b>" . mysqli_error($this->db) . "</b");
