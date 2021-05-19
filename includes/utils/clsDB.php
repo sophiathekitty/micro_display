@@ -13,7 +13,7 @@ if(!defined('MYSQL_CLASS')){
 		private $id;
 		
 		public static $db_g;
-		
+
 		function __construct($dbname, $username, $password){
 			$this->database = $dbname;
 			$this->db = @mysqli_connect('localhost', $username, $password) 
@@ -55,7 +55,21 @@ if(!defined('MYSQL_CLASS')){
 			}
 			return $data;
 		}
-		
+		function safe_select($table,$where = null){
+			// sanitize input
+			$sql = "SELECT * FROM `$table`";
+			if(!is_null($where)){
+				$regex = array("/\"/","/\'/");
+				$replace = array("&quot;","&apos;");
+				$where = preg_replace($regex,$replace,$where);
+				$sql .= " WHERE";
+				foreach($where as $key => $value){
+					$sql .= " `$key` = '$value'";
+				}
+			}
+			$sql .= ";";
+			return $this->select($sql);
+		}
 		function safe_insert($table, $data, $where = ""){ // generates a sanitized insert command 
 			/*
 				$date is required to be a keyed array. 
@@ -143,6 +157,65 @@ AND table_name = '$name';";
 				return true;
 			}
 			return false;
+		}
+		function describe_table($name){
+			return $this->select("DESCRIBE $name");
+		}
+		function install_table($name,$fields){
+			$sql = "CREATE TABLE IF NOT EXISTS `$name` (\n";
+			$first = true;
+			foreach($fields as $field){
+				if($first){
+					$first = false;
+					$sql .= $this->field_sql($field);
+				} else {
+					$sql .= ", \n".$this->field_sql($field);
+				}
+			}
+			$sql .= ") ENGINE = InnoDB;";
+			//echo $sql;
+			$this->insert($sql);
+			echo $this->get_err();
+		}
+		function add_field($table_name,$field,$after){
+			$sql = "ALTER TABLE `$table_name` ADD ".$this->field_sql($field);
+			if(!is_null($after) && $after != "") $sql .= " AFTER `$after`";
+			$sql .= ";";
+			$this->insert($sql);
+		}
+		function remove_field($table_name,$field){
+			$sql = "ALTER TABLE `$table_name` DROP `".$field['Field']."`;";
+			$this->insert($sql);
+		}
+		function update_field($table_name,$field){
+			$sql = "ALTER TABLE `$table_name` CHANGE `".$field['Field']."` ".$this->field_sql($field).";";
+			echo "$sql\n";
+			$this->insert($sql);
+		}
+		function field_sql($field){
+			$sql = "`".$field['Field']."` ".strtoupper($field['Type']);
+			if($field['Null'] == "NO"){
+				$sql .= " NOT NULL";
+			} else {
+				$sql .= " NULL";
+			}
+			if($field['Default'] != ""){
+				if($field['Default'] == "current_timestamp()" || $field['Default'] == "current_timestamp"){
+					$sql .= " DEFAULT CURRENT_TIMESTAMP";
+				} else {
+					$sql .= " DEFAULT '".$field['Default']."'";
+				}
+			}
+			if($field['Extra'] == "auto_increment" || $field['Extra'] == "AUTO_INCREMENT"){
+				$sql .= " AUTO_INCREMENT";
+			}
+			if($field['Extra'] == "on update current_timestamp()" || $field['Extra'] == "on update CURRENT_TIMESTAMP"){
+				$sql .= " on update CURRENT_TIMESTAMP";
+			}
+			if($field['Key'] == "PRI"){
+				$sql .= " PRIMARY KEY";
+			}
+			return $sql;
 		}
 		function create_table($name,$data,$comment,$set_defaults = false){
 			// create the sql for this!!! :O

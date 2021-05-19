@@ -15,4 +15,9 @@ function SaveSettingVar($name,$value){
         clsDB::$db_g->safe_update('settings',['value'=>$value],['name'=>$name]);
     }
 }
+
+class Settings extends clsModel {
+    
+}
+
 ?>
