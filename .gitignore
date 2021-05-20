@@ -2,3 +2,4 @@ settings.php
 phpMyAdmin*
 backup.sql
 extentions/*
+plugins/*
