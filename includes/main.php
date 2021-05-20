@@ -18,6 +18,11 @@ IncludeFolder($root_path."models/");
 IncludeFolder($root_path."modules/");
 IncludeFolder($root_path."views/");
 
+$plugins = FindPlugins($root_path."plugins/");
+foreach($plugins as $plugin){
+    IncludeFolder($plugin."models/");
+    IncludeFolder($plugin."modules/"); 
+}
 function IncludeFolder($path){
     //echo "<br><b>$path</b><br>";
     $shared_models_dir = opendir($path);
@@ -35,4 +40,19 @@ function IncludeFolder($path){
     // CLOSE THE DIRECTORY
     closedir($shared_models_dir);
 }
+
+function FindPlugins($path){
+    $plugins = [];
+    $shared_models_dir = opendir($path);
+    // LOOP OVER ALL OF THE  FILES    
+    while ($file = readdir($shared_models_dir)) { 
+        if(is_dir($path.$file) && $file != ".." && $file != "."){
+            $plugins[] = $path.$file."/";
+        }
+    }
+    // CLOSE THE DIRECTORY
+    closedir($shared_models_dir);
+    return $plugins;
+}
+
 ?>
