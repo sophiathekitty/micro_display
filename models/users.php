@@ -33,13 +33,6 @@ class Users extends clsModel{
             'Default'=>"1",
             'Extra'=>""
         ],[
-            'Field'=>"level",
-            'Type'=>"int(11)",
-            'Null'=>"NO",
-            'Key'=>"",
-            'Default'=>"1",
-            'Extra'=>""
-        ],[
             'Field'=>"bedroom_id",
             'Type'=>"int(11)",
             'Null'=>"YES",
