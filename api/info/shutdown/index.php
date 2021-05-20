@@ -1,13 +1,14 @@
 <?php
 require_once("../../../includes/main.php");
+$settings = new Settings();
 $data = [];
 if(isset($_GET['shutdown'])){
 	if($_GET['shutdown']){
-			SaveSettingVar('shutdown_requested',1);
+			$settings->SaveVar('shutdown_requested',1);
 	} else {
-			SaveSettingVar('shutdown_requested',0);
+		$settings->SaveVar('shutdown_requested',0);
 	}
 }
-$data['shutdown'] = LoadSettingVar('shutdown_requested');
+$data['shutdown'] = $settings->LoadVar('shutdown_requested');
 OutputJson($data);
 ?>

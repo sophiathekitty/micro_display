@@ -10,6 +10,12 @@ and it should be able to lint nicely... so probably do everything as static func
 
 
 class clsModel {
+    public static $models = [];
+    public static function ValidateTables(){
+        foreach(clsModel::$models as $model){
+            $model->ValidateTable();
+        }
+    }
     public function ValidateTable(){
         if(!clsDB::$db_g->has_table($this->table_name)){
             clsDB::$db_g->install_table($this->table_name,$this->fields);
@@ -27,9 +33,9 @@ class clsModel {
                     break;
                 case "Changed":
                     // add the field
-                    echo "Field changed: ".$field['Field']."\n";
+                    //echo "Field changed: ".$field['Field']."\n";
                     clsDB::$db_g->update_field($this->table_name,$field);
-                    echo clsDB::$db_g->get_err();
+                    //echo clsDB::$db_g->get_err();
                     break;
             }
             $after = $field['Field'];
@@ -81,8 +87,11 @@ class clsModel {
 
     public function Save($data,$where = null){
         // check for matching record
-        $row = $this->LoadWhere($where);
         $id = null;
+        $row = null;
+        if($where){
+            $row = $this->LoadWhere($where);
+        }
         if(is_null($row)){
             // record doesn't exist insert a new one
             $id = clsDB::$db_g->safe_insert($this->table_name,$data,$where);

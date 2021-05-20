@@ -1,4 +1,82 @@
 <?php
+
+class Tasks extends clsModel {
+    public $table_name = "Tasks";
+    public $fields = [
+        [
+            'Field'=>"id",
+            'Type'=>"int(11)",
+            'Null'=>"NO",
+            'Key'=>"PRI",
+            'Default'=>"",
+            'Extra'=>"auto_increment"
+        ],[
+            'Field'=>"room_id",
+            'Type'=>"int(11)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"",
+            'Extra'=>""
+        ],[
+            'Field'=>"assigned_to",
+            'Type'=>"int(11)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"",
+            'Extra'=>""
+        ],[
+            'Field'=>"completed_by",
+            'Type'=>"int(11)",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>null,
+            'Extra'=>""
+        ],[
+            'Field'=>"name",
+            'Type'=>"varchar(50)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"",
+            'Extra'=>""
+        ],[
+            'Field'=>"skipped",
+            'Type'=>"tinyint(1)",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>null,
+            'Extra'=>""
+        ],[
+            'Field'=>"created",
+            'Type'=>"datetime",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"current_timestamp()",
+            'Extra'=>""
+        ],[
+            'Field'=>"due",
+            'Type'=>"datetime",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>null,
+            'Extra'=>""
+        ],[
+            'Field'=>"completed",
+            'Type'=>"datetime",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>null,
+            'Extra'=>""
+        ]
+    ];
+}
+
+
+if(defined('VALIDATE_TABLES')){
+    clsModel::$models[] = new Tasks();
+}
+
+/*
+
 function LoadAllTasks(){
     return clsDB::$db_g->select("SELECT * FROM `Task`;");
 }
@@ -41,4 +119,5 @@ function UpdateTask($id,$update){
 function PruneTasks($d){
 
 }
+*/
 ?>

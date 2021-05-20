@@ -1,9 +1,9 @@
 <?php
 require_once("../../../includes/main.php");
-$session = UserSession();
+$session = new UserSession();
 if(isset($_GET['username'],$_GET['password'])){
-    $session = SignupUserSession($session,$_GET['username'],$_GET['password']);
+    $session = $session->SignupUserSession($_GET['username'],$_GET['password']);
 }
-$data = ['session'=>CleanSessionData($session)];
+$data = ['session'=>UserSession::CleanSessionData(UserSession::$session)];
 OutputJson($data);
 ?>

@@ -5,7 +5,8 @@ $data = [];
 if(isset($_GET['pallet'])){
     $data['pallet'] = FullColorPallet();
 } else {
-    $data['colors'] = LoadColors();
+    $colors = new Colors();
+    $data['colors'] = $colors->LoadAll();
 }
 
 OutputJson($data);

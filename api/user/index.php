@@ -1,5 +1,5 @@
 <?php
 require_once("../../includes/main.php");
-$data = ['session'=>CleanSessionData(UserSession())];
+$data = ['session'=>UserSession::CleanSessionData(new UserSession())];
 OutputJson($data);
 ?>

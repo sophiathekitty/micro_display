@@ -1,6 +1,121 @@
 <?php
+class UserSession {
+    public static $session = null;
+    public static $user_logins = null;
+    public static $users = null;
+    public static $servers = null;
+    public function __construct()
+    {
+        $this->SetupModels();
+        if(is_null(UserSession::$session)){
+            UserSession::$session = UserSession::$user_logins->CreateAnonLoginSession($this->UserIpAddress());
+        }
+        UserSession::$session = $this->LoginServer(UserSession::$session);
+        if(UserSession::$session['user_id'] != 0 && is_null(UserSession::$session['user'])){
+            UserSession::$session['user'] = UserSession::$users->LoadById(UserSession::$session['user_id']);
+            UserSession::$users->Ping(UserSession::$session['user_id']);
+        }
+        UserSession::$user_logins->Ping(UserSession::$session['id']);
+        return UserSession::$session;
+    }
+    private function SetupModels(){
+        if(is_null(UserSession::$user_logins)){
+            UserSession::$user_logins = new UserLogins();
+        }
+        if(is_null(UserSession::$users)){
+            UserSession::$users = new Users();
+        }
+        if(is_null(UserSession::$servers)){
+            UserSession::$servers = new Servers();
+        }
+        if(is_null(UserSession::$session)){
+            UserSession::$session = UserSession::$user_logins->LoadByIp($this->UserIpAddress());
+        }
+    }
+    // get the user ip address
+    public function UserIpAddress(){
+        return $_SERVER['REMOTE_ADDR'];
+    }
 
+    private function LoginServer($session){
+        $server = UserSession::$servers->LoadByUrl($this->UserIpAddress());
+        if(!is_null($server)){
+            $session['user'] = UserSession::$users->GetServerUser($server['name'],$server['mac_address']);
+            if(is_null($session['user'])){
+                $session['user'] = UserSession::$users->CreateServerUser($server['name'],$server['mac_address']);
+                $session['user_id'] = $session['user']['id'];
+            }
+            UserSession::$user_logins->LoginAnonUser($session['user']['id'],$session['id'],$server['mac_address']);
+        }
+        UserSession::$users->Ping($session['user_id']);
+        return $session;
+    }
 
+    // login
+    public function LoginUserSession($username,$password){
+        $user = UserSession::$users->GetUser($username);
+        $session = UserSession::$session;
+        if(!is_null($user) && $user['password'] == $this->PasswordHash($username,$password)){
+            $session = UserSession::$user_logins->LoginAnonUser($user['id'],$session['id'],$this->CreateToken($this->UserIpAddress()));
+            $session['user'] = $user;
+        } else {
+            $session['user'] = null;
+            if(is_null($user)){
+                $session['login_error'] = "username [$username] not found";
+            } else {
+                $session['login_error'] = "password doesn't match";
+            }
+        }
+        return $session;
+    }
+    // signup
+    public function SignupUserSession($username,$password){
+        $user = UserSession::$users->GetUser($username);
+        $session = UserSession::$session;
+        if(is_null($user)){
+            $user = UserSession::$users->Create($username,$this->PasswordHash($username,$password));
+            $session = UserSession::$user_logins->LoginAnonUser($user['id'],$session['id'],$this->CreateToken($this->UserIpAddress()));
+            $session['user'] = $user;    
+        } else {
+            $session['signup_error'] = "username [$username] already exists";
+        }
+        return $session;
+    }
+
+    // utility functions
+    // hash a password
+    public function PasswordHash($username,$password){
+        return md5($username.$password.$username);
+    }
+
+    // create a new user token
+   public function CreateToken($ip){
+        $token = md5($ip.time());
+        setcookie('user_token',$token,time()+(86400 * 30),"/");
+        return $token;
+    }
+    // clear the user token cookie
+    public function ClearToken(){
+        setcookie('user_token',"",time()-3600,"/");
+    }
+    public function LogoutUserSession(){
+        UserSession::$session = UserSession::$user_logins->LogoutUserSession(UserSession::$session['id']);
+    }
+    public static function CleanSessionData($session){
+        if(!is_null($session['user'])){
+            $session['user']['password'] = "[redacted]";
+        } else {
+            $session['user'] = ['id'=>0,'username'=>"guest",'level'=>0,'verified'=>0];
+        }
+        if(!is_null($session['token']) && $session['token'] != ""){
+            $session['user']['verified'] = 1;
+        } else {
+            $session['user']['verified'] = 0;
+        }
+        return $session;
+    }
+}
+/*
 function UserSession(){
     $session = GetLoginUserByIP(UserIpAddress());
     if(is_null($session)){

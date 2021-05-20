@@ -202,6 +202,9 @@ AND table_name = '$name';";
 		}
 		function field_sql($field){
 			$sql = "`".$field['Field']."` ".strtoupper($field['Type']);
+			if(isset($field['Collate'])){
+				$sql .= " ".$field['Collate'];
+			}
 			if($field['Null'] == "NO"){
 				$sql .= " NOT NULL";
 			} else {
@@ -210,6 +213,8 @@ AND table_name = '$name';";
 			if($field['Default'] != ""){
 				if($field['Default'] == "current_timestamp()" || $field['Default'] == "current_timestamp"){
 					$sql .= " DEFAULT CURRENT_TIMESTAMP";
+				} elseif(is_null($field['Default']) || $field['Default'] == "NULL"){
+					$sql .= " DEFAULT NULL";
 				} else {
 					$sql .= " DEFAULT '".$field['Default']."'";
 				}

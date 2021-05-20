@@ -1,4 +1,100 @@
 <?php
+class Servers extends clsModel{
+    public $table_name = "Servers";
+    public $fields = [
+        [
+            'Field'=>"id",
+            'Type'=>"int(11)",
+            'Null'=>"NO",
+            'Key'=>"PRI",
+            'Default'=>"",
+            'Extra'=>"auto_increment"
+        ],[
+            'Field'=>"mac_address",
+            'Type'=>"varchar(100)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"",
+            'Extra'=>""
+        ],[
+            'Field'=>"name",
+            'Type'=>"varchar(100)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"",
+            'Extra'=>""
+        ],[
+            'Field'=>"url",
+            'Type'=>"varchar(100)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"",
+            'Extra'=>""
+        ],[
+            'Field'=>"type",
+            'Type'=>"varchar(100)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"",
+            'Extra'=>""
+        ],[
+            'Field'=>"main",
+            'Type'=>"tinyint(1)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
+        ],[
+            'Field'=>"last_ping",
+            'Type'=>"datetime",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"",
+            'Extra'=>""
+        ],[
+            'Field'=>"online",
+            'Type'=>"tinyint(1)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"",
+            'Extra'=>""
+        ]
+    ];
+    public function Hub(){
+        $rows = $this->LoadWhere(['main'=>1]);
+        if(count($rows) > 0) return $rows[0];
+        return null;
+    }
+    public function Online(){
+        return $this->LoadAllWhere(['online'=>1]);
+    }
+    public function Offline(){
+        return $this->LoadAllWhere(['online'=>0]);
+    }
+    public function LoadByUrl($ip){
+        if(strpos($ip,"::1") > -1 || $ip == "localhost"){
+            return ['id'=>0,'name'=>'localhost','url'=>$ip,'mac_address'=>"localhost"];
+        }
+        return $this->LoadWhere(['url'=>$ip]);
+    }
+    public function LoadByMacAddress($mac_address){
+        return $this->LoadWhere(['mac_address'=>$mac_address]);
+    }
+    public function ServerPinged($mac_address){
+        return $this->Save(['last_ping'=> date("Y-m-d H:i:s")],['mac_address'=>$mac_address]);
+    }
+    public function Add($name,$type,$mac_address,$url,$main = 0){
+        return $this->Save(['name'=>$name,'type'=>$type,'mac_address'=>$mac_address,'url'=>$url,'main'=>$main,'online'=>1,'last_ping'=>date("Y-m-d H:i:s")]);
+    }
+    public function Update($name,$type,$mac_address,$url, $main = 0){
+        return $this->Save(['name'=>$name,'type'=>$type,'url'=>$url,'main'=>$main,'online'=>1,'last_ping'=>date("Y-m-d H:i:s")],['mac_address'=>$mac_address]);
+    }
+}
+if(defined('VALIDATE_TABLES')){
+    clsModel::$models[] = new Servers();
+}
+
+/*
 function AllServers(){
     return clsDB::$db_g->select("SELECT * FROM `servers`");
 }
@@ -30,7 +126,7 @@ function PingServer($mac_address){
     clsDB::$db_g->safe_update('servers',['last_ping'=>$time],['mac_address'=>$mac_address]);
 }
 function AddServer($name,$type,$mac_address,$url){
-    clsDB::$db_g->safe_inserts('servers',array(
+    clsDB::$db_g->safe_insert('servers',array(
         "name" => $name,
         "mac_address" => $mac_address,
         "type" => $type,
@@ -40,7 +136,7 @@ function AddServer($name,$type,$mac_address,$url){
     ));
     return ServerMacAddress($mac_address);
 }
-function UpdateServer($name,$type,$mac_address,$url){
+function Update($name,$type,$mac_address,$url){
     clsDB::$db_g->safe_update('servers',array(
         "name" => $name,
         "type" => $type,
@@ -52,4 +148,5 @@ function UpdateServer($name,$type,$mac_address,$url){
     ));
     return ServerMacAddress($mac_address);
 }
+*/
 ?>

@@ -1,4 +1,5 @@
 <?php
+/*
 function LoadColors(){
     return clsDB::$db_g->select("SELECT * FROM `Colors`");
 }
@@ -20,6 +21,7 @@ function SaveColor($id,$color){
     }
     return LoadColor($id);
 }
+*/
 class Colors extends clsModel {
     public $table_name = "Colors";
     public $fields = [
@@ -64,5 +66,8 @@ class Colors extends clsModel {
         }
         return $pallets;
     }
+}
+if(defined('VALIDATE_TABLES')){
+    clsModel::$models[] = new Colors();
 }
 ?>
