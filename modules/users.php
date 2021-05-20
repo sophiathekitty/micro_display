@@ -1,9 +1,22 @@
 <?php
 class UserSession {
+    public static $user_session = null;
     public static $session = null;
     public static $user_logins = null;
     public static $users = null;
     public static $servers = null;
+
+    public static function GetUserSession(){
+        if(is_null(UserSession::$user_session)){
+            UserSession::$user_session = new UserSession();
+        }
+        return UserSession::$user_session;
+    }
+    public static function GetUserSessionArray(){
+        UserSession::GetUserSession();
+        return UserSession::$session;
+    }
+
     public function __construct()
     {
         $this->SetupModels();
@@ -89,7 +102,7 @@ class UserSession {
     }
 
     // create a new user token
-   public function CreateToken($ip){
+    public function CreateToken($ip){
         $token = md5($ip.time());
         setcookie('user_token',$token,time()+(86400 * 30),"/");
         return $token;
@@ -101,7 +114,8 @@ class UserSession {
     public function LogoutUserSession(){
         UserSession::$session = UserSession::$user_logins->LogoutUserSession(UserSession::$session['id']);
     }
-    public static function CleanSessionData($session){
+    public static function CleanSessionData(){
+        $session = UserSession::GetUserSessionArray();
         if(!is_null($session['user'])){
             $session['user']['password'] = "[redacted]";
         } else {

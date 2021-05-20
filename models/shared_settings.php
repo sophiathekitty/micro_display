@@ -20,6 +20,21 @@ function SaveSettingVar($name,$value){
 }
 
 class Settings extends clsModel {
+    private static $settings = null;
+    public static function GetInstance(){
+        if(is_null(Settings::$settings)){
+            Settings::$settings = new Settings();
+        }
+        return Settings::$settings;
+    }
+    public static function LoadSettingsVar($name,$default = null){
+        $settings = Settings::GetInstance();
+        return $settings->LoadVar($name,$default);
+    }
+    public static function SaveSettingsVar($name,$value){
+        $settings = Settings::GetInstance();
+        return $settings->SaveVar($name,$value);
+    }
     public $table_name = "Settings";
     public $fields = [
         [
@@ -51,7 +66,8 @@ class Settings extends clsModel {
             $this->SaveVar($name,$default);
             return $default;
         }
-        return $var;
+        if(!is_null($var)) return $var['value'];
+        return null;
     }
     public function SaveVar($name,$value){
         if(is_null($this->LoadVar($name))){
@@ -60,6 +76,7 @@ class Settings extends clsModel {
         return $this->Save(['value'=>$value],['name'=>$name]);
     }
 }
+
 if(defined('VALIDATE_TABLES')){
     clsModel::$models[] = new Settings();
 }

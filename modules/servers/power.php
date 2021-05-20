@@ -1,8 +1,14 @@
 <?php
 function ShutdownDevice(){
-    shell_exec("sudo shutdown now");
+    if(Settings::LoadSettingsVar('shutdown_requested',0)){
+        Settings::SaveSettingsVar('shutdown_requested',0);
+        shell_exec("sudo shutdown now");    
+    }
 }
 function RebootDevice(){
-    shell_exec("sudo shutdown -r now");
+    if(Settings::LoadSettingsVar('reboot_requested',0)){
+        Settings::SaveSettingsVar('reboot_requested',0);
+        shell_exec("sudo shutdown -r now");    
+    }
 }
 ?>

@@ -68,6 +68,9 @@ class Tasks extends clsModel {
             'Extra'=>""
         ]
     ];
+    public function LoadActiveTasks(){
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `completed` IS NULL;");
+    }
 }
 
 
