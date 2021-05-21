@@ -89,7 +89,21 @@ class clsModel {
         if(count($rows) > 0) return $rows[0];
         return null;
     }
-
+    public function LoadFieldAfter($field,$datetime){
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `$field` > '$datetime';");
+    }
+    public function LoadFieldBetween($field,$start,$end){
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `$field` BETWEEN '$start' AND '$end';");
+    }
+    public function LoadFieldHour($field,$hour){
+        if($hour < 10) $hour = "0$hour";
+        $start = $hour.":00:00";
+        $end = $hour.":59:59";
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE TIME(`$field`) BETWEEN '$start' AND '$end';");
+    }
+    public function LoadFieldBetweenTime($field,$start,$end){
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE TIME(`$field`) BETWEEN '$start' AND '$end';");
+    }
     public function Save($data,$where = null){
         // check for matching record
         $id = null;
@@ -106,6 +120,11 @@ class clsModel {
             $row = $this->LoadWhere($where);
         }
         return ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'row'=>$row];
+    }
+
+    public function PruneField($field,$seconds){
+        $d = date("Y-m-d H:i:s",time()-$seconds);
+        clsDB::$db_g->_query("DELETE FROM `".$this->table_name."` WHERE `$field` < '$d';");
     }
 
     // this needs to be overwritten by the individual models

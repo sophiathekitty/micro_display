@@ -60,6 +60,14 @@ class Servers extends clsModel{
             'Extra'=>""
         ]
     ];
+
+
+    public static $servers = null;
+    public static function GetHub(){
+        if(is_null(Servers::$servers)) Servers::$servers = new Servers();
+        return Servers::$servers->Hub();
+    }
+
     public function Hub(){
         $rows = $this->LoadWhere(['main'=>1]);
         if(count($rows) > 0) return $rows[0];
