@@ -76,13 +76,18 @@ class clsModel {
         if(count($rows) > 0) return $rows[0];
         return null;
     }
-    public function LoadWhere($where){
-        $rows = clsDB::$db_g->safe_select($this->table_name,$where);
+    public function LoadWhere($where,$order = null){
+        $rows = clsDB::$db_g->safe_select($this->table_name,$where,$order);
         if(count($rows) > 0) return $rows[0];
         return null;
     }
-    public function LoadAllWhere($where){
-        return clsDB::$db_g->safe_select($this->table_name,$where);
+    public function LoadAllWhere($where,$order = null){
+        return clsDB::$db_g->safe_select($this->table_name,$where,$order);
+    }
+    public function LoadMostRecentlyCreated(){
+        $rows = clsDB::$db_g->safe_select($this->table_name,null,['created'=>"DESC"]);
+        if(count($rows) > 0) return $rows[0];
+        return null;
     }
 
     public function Save($data,$where = null){

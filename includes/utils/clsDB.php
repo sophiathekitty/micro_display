@@ -55,7 +55,7 @@ if(!defined('MYSQL_CLASS')){
 			}
 			return $data;
 		}
-		function safe_select($table,$where = null){
+		function safe_select($table,$where = null, $order = null){
 			// sanitize input
 			$sql = "SELECT * FROM `$table`";
 			if(!is_null($where)){
@@ -65,6 +65,17 @@ if(!defined('MYSQL_CLASS')){
 				$sql .= " WHERE";
 				foreach($where as $key => $value){
 					$sql .= " `$key` = '$value'";
+				}
+			}
+			if(!is_null($order)){
+				$sql .= " ORDER BY ";
+				$first = true;
+				foreach($order as $key => $value){
+					if(!$first){
+						$sql .= ", ";
+					}
+					$sql .= "`$key` $value";
+					$first = false;
 				}
 			}
 			$sql .= ";";
