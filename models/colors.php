@@ -27,6 +27,21 @@ class Colors extends clsModel {
         ]
     ];
 
+    public static $colors;
+    public static function GetInstance(){
+        if(is_null(Colors::$colors)) Colors::$colors = new Colors();
+        return Colors::$colors;
+    }
+    public static function GetColor($id,$pallet = "general",$default = null){
+        $colors = Colors::GetInstance();
+        $color = $colors->LoadColor($id);
+        if(is_null($color) && !is_null($default)){
+            $colors->SaveColor($id,$default,$pallet);
+            return $default;
+        }
+        return $color['color'];
+    }
+
     public function SaveColor($id,$color,$pallet = "general"){
         return $this->Save(['id'=>$id,'color'=>$color,'pallet'=>$color],['id'=>$id]);
     }

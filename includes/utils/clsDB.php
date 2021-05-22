@@ -92,8 +92,9 @@ if(!defined('MYSQL_CLASS')){
 			// sanitize input
 			$regex = array("/\"/","/\'/");
 			$replace = array("&quot;","&apos;");
+			//print_r($data);
 			$data = preg_replace($regex,$replace,$data);
-			
+			//print_r($data);
 			// generate sql
 			$structure = ""; $values = ""; $i = 1;
 			foreach($data as $key => $value){
@@ -101,6 +102,8 @@ if(!defined('MYSQL_CLASS')){
 					$structure .= "`$key`,";
 					if($value == "NOW()")
 						$values .= "NOW(),";
+					elseif(is_null($value) || $value == "")
+						$values .= "NULL,";
 					else
 						$values .= "'$value',";
 				} else {
@@ -118,10 +121,11 @@ if(!defined('MYSQL_CLASS')){
 					$where_txt .= " `$key` = '$value'";
 				}
 			}
-			if($where == "")
+			if($where_txt == "")
 				$sql = "INSERT INTO `$table` ($structure) VALUES ($values)";
 			else 
 				$sql = "REPLACE INTO `$table` ($structure) VALUES ($values) WHERE $where_txt";
+			//echo "$sql\n";
 			return $this->insert($sql);
 		}
 		function safe_update($table, $data, $where = NULL){ // generates a sanitized update command 
@@ -141,7 +145,10 @@ if(!defined('MYSQL_CLASS')){
 			$sql = "UPDATE `$table` SET \n";
 			$c = 1;
 			foreach($data as $key => $value){
-				$sql .= "	`$key` = '$value'";
+				if(is_null($value) || $value == "")
+					$sql .= "	`$key` = NULL";
+				else
+					$sql .= "	`$key` = '$value'";
 				if($c++ < count($data))
 					$sql .= ",";
 				$sql .= " \n";

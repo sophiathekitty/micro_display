@@ -16,6 +16,7 @@ $data = [
 		'name' => $settings->LoadVar('name',"null device")
 		]
 	];
-$data['apis'] = LocalAPIs();
+$data['apis'] = LocalPluginApis(LocalAPIs());
+$data['extensions'] = LocalExtensions();
 OutputJson($data);
 ?>

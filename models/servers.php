@@ -69,9 +69,7 @@ class Servers extends clsModel{
     }
 
     public function Hub(){
-        $rows = $this->LoadWhere(['main'=>1]);
-        if(count($rows) > 0) return $rows[0];
-        return null;
+        return $this->LoadWhere(['main'=>1]);
     }
     public function Online(){
         return $this->LoadAllWhere(['online'=>1]);
