@@ -17,6 +17,7 @@ $data = [
 		]
 	];
 $data['apis'] = LocalPluginApis(LocalAPIs());
-$data['extensions'] = LocalExtensions();
+$data['extensions'] = FindLocalExtensions();
+$data['plugins'] = FindPluginsName($root_path."plugins/");
 OutputJson($data);
 ?>

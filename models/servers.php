@@ -67,6 +67,10 @@ class Servers extends clsModel{
         if(is_null(Servers::$servers)) Servers::$servers = new Servers();
         return Servers::$servers->Hub();
     }
+    public static function IsHub(){
+        $hub = Servers::GetHub();
+        return ($hub['mac_address'] == LocalMacAddress());
+    }
 
     public function Hub(){
         return $this->LoadWhere(['main'=>1]);

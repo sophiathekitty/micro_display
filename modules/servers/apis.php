@@ -9,7 +9,7 @@ function APIFolder($root,$path,$apis = []){
     $shared_models_dir = opendir($root.$path);
     // LOOP OVER ALL OF THE  FILES    
     while ($file = readdir($shared_models_dir)) { 
-        //echo "<br><i>$file</i> ".is_dir($root.$path.$file)."<br>";
+        //echo "$root $path $file ".is_dir($root.$path.$file)."\n";
         // IF IT IS NOT A FOLDER, AND ONLY IF IT IS A .php WE ACCESS IT
         if(is_dir($root.$path.$file) && $file != ".." && $file != "."){
             $apis[$file] = [];

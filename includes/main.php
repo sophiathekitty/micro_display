@@ -88,6 +88,20 @@ function FindPluginsLocal($path){
     closedir($shared_models_dir);
     return $plugins;
 }
+function FindPluginsName($path){
+    //echo "FindPlugins: $path \n";
+    $plugins = [];
+    $shared_models_dir = opendir($path);
+    // LOOP OVER ALL OF THE  FILES    
+    while ($file = readdir($shared_models_dir)) { 
+        if(is_dir($path.$file) && $file != ".." && $file != "."){
+            $plugins[] = preg_replace("/Null/","",$file);
+        }
+    }
+    // CLOSE THE DIRECTORY
+    closedir($shared_models_dir);
+    return $plugins;
+}
 //echo "0.7\n";
 
 ?>
