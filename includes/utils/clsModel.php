@@ -127,7 +127,41 @@ class clsModel {
         clsDB::$db_g->_query("DELETE FROM `".$this->table_name."` WHERE `$field` < '$d';");
     }
 
-    // this needs to be overwritten by the individual models
+    public function CleanData($data){
+        $clean = [];
+        foreach($this->fields as $field){
+            if(isset($data[$field['Field']])){
+                $clean[$field['Field']] = $data[$field['Field']];
+            }
+        }
+        return $clean;
+    }
+    private function SkipField($field,$skips){
+        if(is_null($skips)) return true;
+        foreach($skips as $skip){
+            if($field == $skip) return false;
+        }
+        return true;
+    }
+    public function CleanDataSkipFields($data, $fields = null){
+        $clean = [];
+        foreach($this->fields as $field){
+            if(isset($data[$field['Field']]) && $this->SkipField($field['Field'],$fields)){
+                $clean[$field['Field']] = $data[$field['Field']];
+            }
+        }
+        return $clean;
+    }    // this needs to be overwritten by the individual models
+    public function CleanDataSkipId($data){
+        return $this->CleanDataSkipFields($data,['id']);
+        $clean = [];
+        foreach($this->fields as $field){
+            if(isset($data[$field['Field']]) && $field['Field'] != 'id'){
+                $clean[$field['Field']] = $data[$field['Field']];
+            }
+        }
+        return $clean;
+    }    // this needs to be overwritten by the individual models
     public $table_name = "Example";
     public $fields = [
         [

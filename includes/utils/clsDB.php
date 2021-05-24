@@ -11,6 +11,7 @@ if(!defined('MYSQL_CLASS')){
 		var $db;
 		private $database;
 		private $id;
+		public $last_sql;
 		
 		public static $db_g;
 
@@ -26,6 +27,7 @@ if(!defined('MYSQL_CLASS')){
 		
 		function _query($sql){
 			//$sql = preg_replace("/;/","",$sql);
+			$this->last_sql = $sql;
 			$result = @mysqli_query($this->db, $sql);
 			return $result;
 		}
@@ -63,8 +65,11 @@ if(!defined('MYSQL_CLASS')){
 				$replace = array("&quot;","&apos;");
 				$where = preg_replace($regex,$replace,$where);
 				$sql .= " WHERE";
+				$first = true;
 				foreach($where as $key => $value){
+					if(!$first) $sql .= " AND";
 					$sql .= " `$key` = '$value'";
+					$first = false;
 				}
 			}
 			if(!is_null($order)){
@@ -79,6 +84,7 @@ if(!defined('MYSQL_CLASS')){
 				}
 			}
 			$sql .= ";";
+			//echo "SafeSelect ::: $sql";
 			return $this->select($sql);
 		}
 		function safe_insert($table, $data, $where = null){ // generates a sanitized insert command 
@@ -117,8 +123,11 @@ if(!defined('MYSQL_CLASS')){
 			$where_txt = "";
 			if(!is_null($where)){
 				$where = preg_replace($regex,$replace,$where);
+				$first = true;
 				foreach($where as $key => $value){
-					$where_txt .= " `$key` = '$value'";
+					if(!$first) $where_txt .= " AND ";
+					$where_txt .= "`$key` = '$value'";
+					$first = false;
 				}
 			}
 			if($where_txt == "")
@@ -153,11 +162,14 @@ if(!defined('MYSQL_CLASS')){
 					$sql .= ",";
 				$sql .= " \n";
 			}
-			$sql .= "WHERE ";
+			$sql .= "WHERE";
 			if($where){
 				$where = preg_replace($regex,$replace,$where);
+				$first = true;
 				foreach($where as $key => $value){
-					$sql .= "`$key` = '$value'";
+					if(!$first) $sql .= " AND";
+					$sql .= " `$key` = '$value'";
+					$first = false;
 				}
 			} else {
 				$sql .= "`id` = '".$data['id']."'";
