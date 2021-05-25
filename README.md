@@ -133,10 +133,6 @@ This needs to be followed by the following command:
 mysql_secure_installation
 ```
 
-```bash
-sudo ln -s /var/www/html www && sudo chown -R pi:pi www && sudo chmod 777 www
-```
-
 ### Setup Mini PiTFT all in one maga command of doom
 
 this is going to be very slow and scary. just let it do its thing. the adafruit-circuitpython-rgb-dislay is the scariest and just kinda hangs. but it's ok. it's installing
