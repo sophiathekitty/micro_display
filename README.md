@@ -180,6 +180,37 @@ curl https://get.pimoroni.com/inkyphat | bash
 
 see [inky-phat](https://github.com/pimoroni/inky-phat) for examples and documentation of inky phat
 
+## Cron Jobs
+
+```bash
+sudo crontab -e
+```
+
+```crontab
+1 * * * * sh /var/www/html/gitpull.sh
+2 * * * * sh /var/www/html/plugins/NullSensors/gitpull.sh
+3 * * * * sh /var/www/html/plugins/NullWeather/gitpull.sh
+#4 * * * * sh /var/www/html/extensions/MealPlanner/gitpull.sh
+5 * * * * wget -O/dev/null -q http://localhost/helpers/validate_models.php
+
+* * * * * wget -O/dev/null -q http://localhost/services/every_minute.php
+0 * * * * wget -O/dev/null -q http://localhost/services/every_hour.php
+6 0 * * * wget -O/dev/null -q http://localhost/services/every_day.php
+7 0 1 * * wget -O/dev/null -q http://localhost/services/every_month.php
+8 0 1 1 * wget -O/dev/null -q http://localhost/services/every_year.php
+9 0 * * 1 wget -O/dev/null -q http://localhost/services/every_week.php
+```
+
+### eInk python cron job
+
+```bash
+crontab -e
+```
+
+```crontab
+* * * * * sh /var/www/html/python/eInk/refresh.sh
+```
+
 ## Tools
 
  * [favicon generator](https://www.favicon-generator.org/)
