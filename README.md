@@ -201,6 +201,16 @@ sudo crontab -e
 9 0 * * 1 wget -O/dev/null -q http://localhost/services/every_week.php
 ```
 
+### mini pitft cron job
+
+```bash
+crontab -e
+```
+
+```crontab
+@reboot sudo sh /var/www/html/python/pitft/screen.sh
+```
+
 ### eInk python cron job
 
 ```bash
