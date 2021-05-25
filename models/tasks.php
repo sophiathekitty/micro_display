@@ -68,8 +68,33 @@ class Tasks extends clsModel {
             'Extra'=>""
         ]
     ];
-    public function LoadActiveTasks(){
-        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `completed` IS NULL;");
+    private static $tasks;
+    private static function GetInstance(){
+        if(is_null(Tasks::$tasks)) Tasks::$tasks = new Tasks();
+        return Tasks::$tasks;
+    }
+    public static function LoadActiveTasks(){
+        $tasks = Tasks::GetInstance();
+        return $tasks->LoadWhere(['completed'=>null]);
+    }
+    public static function LoadActiveTasksToday(){
+        $tasks = Tasks::GetInstance();
+        return $tasks->LoadWhere(['completed'=>null,'due'=>date("Y-m-d H:i:s")]);
+    }
+    public static function LoadDueTasks(){
+        $tasks = Tasks::GetInstance();
+        return $tasks->LoadWhereFieldBefore(['completed'=>null],"due",date("Y-m-d H:i:s"));
+    }
+    public static function SaveTask($data){
+        $tasks = Tasks::GetInstance();
+        $tasks->PruneField('due',DaysToSeconds(5));
+        $data = $tasks->CleanDataSkipId($data);
+        //print_r($data);
+        $task = $tasks->LoadWhere(['name'=>$data['name'],'due'=>$data['due']]);
+        if(is_null($task)){
+            return $tasks->Save($data);
+        }
+        return $tasks->Save($data,['name'=>$data['name'],'due'=>$data['due']]);
     }
 }
 

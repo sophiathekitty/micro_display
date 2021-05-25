@@ -92,6 +92,17 @@ class clsModel {
     public function LoadFieldAfter($field,$datetime){
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `$field` > '$datetime';");
     }
+    public function LoadFieldBefore($field,$datetime){
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `$field` < '$datetime';");
+    }
+    public function LoadWhereFieldAfter($where,$field,$datetime){
+        $where_txt = clsDB::$db_g->where_safe_string($where);
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE $where_txt AND `$field` > '$datetime';");
+    }
+    public function LoadWhereFieldBefore($where,$field,$datetime){
+        $where_txt = clsDB::$db_g->where_safe_string($where);
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE $where_txt AND `$field` < '$datetime';");
+    }
     public function LoadFieldBetween($field,$start,$end){
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `$field` BETWEEN '$start' AND '$end';");
     }

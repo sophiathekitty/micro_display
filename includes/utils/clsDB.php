@@ -57,6 +57,19 @@ if(!defined('MYSQL_CLASS')){
 			}
 			return $data;
 		}
+		function where_safe_string($where){
+			$regex = array("/\"/","/\'/");
+			$replace = array("&quot;","&apos;");
+			$where = preg_replace($regex,$replace,$where);
+			$first = true;
+			$sql = "";
+			foreach($where as $key => $value){
+				if(!$first) $sql .= " AND";
+				$sql .= " `$key` = '$value'";
+				$first = false;
+			}
+			return $sql;
+		}
 		function safe_select($table,$where = null, $order = null){
 			// sanitize input
 			$sql = "SELECT * FROM `$table`";
