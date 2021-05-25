@@ -119,6 +119,54 @@ mysql_secure_installation
 sudo ln -s /var/www/html www && sudo chown -R pi:pi www && sudo chmod 777 www
 ```
 
+### Setup Mini PiTFT all in one maga command of doom
+
+this is going to be very slow and scary. just let it do its thing. the adafruit-circuitpython-rgb-dislay is the scariest and just kinda hangs. but it's ok. it's installing
+
+```bash
+sudo apt-get install python3-pip -y && sudo pip3 install adafruit-circuitpython-rgb-display && sudo pip3 install --upgrade --force-reinstall spidev && sudo apt-get install ttf-dejavu -y && sudo apt-get install python3-pil -y && sudo apt-get install python3-numpy -y
+```
+
+### Setup Mini PiTFT individual steps.
+
+the adafruit-circuitpython-rgb-dislay is the scariest and just kinda hangs. but it's ok. it's installing. also make sure to turn on the spi interface in the raspi-config
+
+```bash
+sudo apt-get install python3-pip -y
+```
+
+```bash
+sudo pip3 install adafruit-circuitpython-rgb-display
+```
+
+```bash
+sudo pip3 install --upgrade --force-reinstall spidev 
+```
+
+```bash
+sudo apt-get install ttf-dejavu -y
+```
+
+```bash
+sudo apt-get install python3-pil -y
+```
+
+```bash
+sudo apt-get install python3-numpy -y
+```
+
+see [adafruit](https://learn.adafruit.com/adafruit-mini-pitft-135x240-color-tft-add-on-for-raspberry-pi/python-setup) for examples and documentation of mini pitft
+
+
+### Setup for eInk display
+
+```bash
+curl https://get.pimoroni.com/inkyphat | bash
+```
+
+see [inky-phat](https://github.com/pimoroni/inky-phat) for examples and documentation of inky phat
+
 ## Tools
 
-favicon generator: <https://www.favicon-generator.org/>
+ * [favicon generator](https://www.favicon-generator.org/)
+ * [open source icons](https://game-icons.net/)
