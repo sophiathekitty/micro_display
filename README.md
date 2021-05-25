@@ -224,7 +224,7 @@ crontab -e
 ## Plugins
 
 * required for weather data: [NullWeather](https://github.com/sophiathekitty/NullWeather)
-* required for room temperature data: [NullWeather](https://github.com/sophiathekitty/NullSensors)
+* required for room temperature data: [NullSensors](https://github.com/sophiathekitty/NullSensors)
 
 ## Extensions
 
