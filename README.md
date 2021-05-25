@@ -2,7 +2,11 @@
 
 a micro display using a raspberry pi zero and mini PiTFT hat. testing out pulling this to the pi so maybe i can have them do automatic pulls...
 
-all in one package for hardware: <https://www.adafruit.com/product/4475>
+### Hardware 
+
+ * all in one package for hardware: [Mini Color PiTFT Ad Blocking Pi-Hole Kit - No Soldering!](https://www.adafruit.com/product/4475)
+ * raspberry pi zero wh: [Raspberry Pi Zero WH (Zero W with Headers)](https://www.adafruit.com/product/3708)
+ * raspberry pi zero wh: [Adafruit Mini PiTFT - 135x240 Color TFT Add-on for Raspberry Pi](https://www.adafruit.com/product/4393)
 
 ## Setup
 
@@ -22,10 +26,16 @@ this is what i've used to setup a few raspberry pi zeros... slightly modified to
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install apache2 -y && sudo a2enmod rewrite && sudo service apache2 restart && sudo apt-get install php -y && sudo apt-get install libapache2-mod-php -y && sudo apt-get install mariadb-server -y && sudo apt-get install php-mysql -y && sudo service apache2 restart && sudo apt-get install python -y && sudo apt-get install python-serial -y && sudo apt-get install python-serial -y && sudo ln -s /var/www/html www && sudo chown -R pi:pi /var/www/html && sudo chmod 777 /var/www/html && sudo apt-get install git -y && sudo apt-get install python-urllib3 -y
 ```
 
-#### complete micro display setup command of epic doom
+#### complete mini pitft micro display setup command of epic doom
 
 ```bash
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install apache2 -y && sudo a2enmod rewrite && sudo service apache2 restart && sudo apt-get install php -y && sudo apt-get install libapache2-mod-php -y && sudo apt-get install mariadb-server -y && sudo apt-get install php-mysql -y && sudo service apache2 restart && sudo apt-get install python -y && sudo apt-get install python-serial -y && sudo apt-get install python-serial -y && sudo ln -s /var/www/html www && sudo chown -R pi:pi /var/www/html && sudo chmod 777 /var/www/html && sudo apt-get install git -y && sudo apt-get install python-urllib3 -y && sudo apt-get install python3-pip -y && sudo pip3 install adafruit-circuitpython-rgb-display && sudo pip3 install --upgrade --force-reinstall spidev && sudo apt-get install ttf-dejavu -y && sudo apt-get install python3-pil -y && sudo apt-get install python3-numpy -y
+```
+
+#### complete eInk micro display setup command of epic doom
+
+```bash
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install apache2 -y && sudo a2enmod rewrite && sudo service apache2 restart && sudo apt-get install php -y && sudo apt-get install libapache2-mod-php -y && sudo apt-get install mariadb-server -y && sudo apt-get install php-mysql -y && sudo service apache2 restart && sudo apt-get install python -y && sudo apt-get install python-serial -y && sudo apt-get install python-serial -y && sudo ln -s /var/www/html www && sudo chown -R pi:pi /var/www/html && sudo chmod 777 /var/www/html && sudo apt-get install git -y && sudo apt-get install python-urllib3 -y && curl https://get.pimoroni.com/inkyphat | bash
 ```
 
 ### Individual commands
