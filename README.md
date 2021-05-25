@@ -221,6 +221,15 @@ crontab -e
 * * * * * sh /var/www/html/python/eInk/refresh.sh
 ```
 
+## Plugins
+
+* required for weather data: [NullWeather](https://github.com/sophiathekitty/NullWeather)
+* required for room temperature data: [NullWeather](https://github.com/sophiathekitty/NullSensors)
+
+## Extensions
+
+* required for eInk display: [MealPlanner](https://github.com/sophiathekitty/MealPlanner)
+
 ## Tools
 
  * [favicon generator](https://www.favicon-generator.org/)
