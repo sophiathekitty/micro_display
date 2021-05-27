@@ -106,6 +106,7 @@ class Rooms extends clsModel{
         $rooms = Rooms::GetInstance();
         $data = $rooms->CleanData($data);
         $room = $rooms->LoadById($data['id']);
+        print_r($data);
         if(is_null($room)){
             $rooms->Save($data);
         } else {
