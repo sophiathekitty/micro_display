@@ -58,6 +58,41 @@ class Rooms extends clsModel{
             'Key'=>"",
             'Default'=>"0",
             'Extra'=>""
+        ],[
+            'Field'=>"lights_on_in_room",
+            'Type'=>"int(11)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
+        ],[
+            'Field'=>"lights_on_in_neighbors",
+            'Type'=>"int(11)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
+        ],[
+            'Field'=>"neighbors_lights_off_percent",
+            'Type'=>"float",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
+        ],[
+            'Field'=>"sunrise",
+            'Type'=>"int(11)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
+        ],[
+            'Field'=>"sunset",
+            'Type'=>"int(11)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
         ]
     ];
 
@@ -69,6 +104,7 @@ class Rooms extends clsModel{
     }
     public static function SaveRoom($data){
         $rooms = Rooms::GetInstance();
+        $data = $rooms->CleanData($data);
         $room = $rooms->LoadById($data['id']);
         if(is_null($room)){
             $rooms->Save($data);
