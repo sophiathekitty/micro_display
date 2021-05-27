@@ -120,7 +120,7 @@ sudo apt-get install python-urllib3 -y
 sudo mysql -u root
 ```
 
-```mysql
+```sql
 [MariaDB] use mysql;
 [MariaDB] update user set plugin='' where User='root';
 [MariaDB] flush privileges;
@@ -186,7 +186,7 @@ see [inky-phat](https://github.com/pimoroni/inky-phat) for examples and document
 sudo crontab -e
 ```
 
-```crontab
+```Apache config
 1 * * * * sh /var/www/html/gitpull.sh
 2 * * * * sh /var/www/html/plugins/NullSensors/gitpull.sh
 3 * * * * sh /var/www/html/plugins/NullWeather/gitpull.sh
@@ -207,7 +207,7 @@ sudo crontab -e
 crontab -e
 ```
 
-```crontab
+```Apache config
 @reboot sudo sh /var/www/html/python/pitft/screen.sh
 ```
 
@@ -217,9 +217,18 @@ crontab -e
 crontab -e
 ```
 
-```crontab
+```Apache config
 * * * * * sh /var/www/html/python/eInk/refresh.sh
 ```
+
+## Plugins
+
+* required for weather data: [NullWeather](https://github.com/sophiathekitty/NullWeather)
+* required for room temperature data: [NullSensors](https://github.com/sophiathekitty/NullSensors)
+
+## Extensions
+
+* required for eInk display: [MealPlanner](https://github.com/sophiathekitty/MealPlanner)
 
 ## Tools
 
