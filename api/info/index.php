@@ -11,7 +11,7 @@ $data = [
 		'main' => $settings->LoadVar('main',0),
 		'path' => $settings->LoadVar('path',"/"),
 		'server' => $settings->LoadVar('server',"pi"),
-		'mac_address' => LocalMacAddress(),
+		'mac_address' => $settings->LoadVar('mac_address',LocalMacAddress()),
 		'name' => $settings->LoadVar('name',"null device")
 		]
 	];
