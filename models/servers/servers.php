@@ -127,7 +127,7 @@ class Servers extends clsModel{
                 } else {
                     $data['offline'] = 0;
                 }
-                if($data['offline'] > 2) {
+                if($data['offline'] > (int)Settings::LoadSettingsVar('offline_threshold',10)) {
                     $data['online'] = 0;
                 } else {
                     $data['online'] = 1;
