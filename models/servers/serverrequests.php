@@ -50,7 +50,7 @@ class ServerRequests extends clsModel{
 
     private static $servers = null;
     private static function GetInstance(){
-        if(is_null(ServerRequests::$servers)) ServerRequests::$servers = new Servers();
+        if(is_null(ServerRequests::$servers)) ServerRequests::$servers = new ServerRequests();
         return ServerRequests::$servers;
     }
     public static function LoadHubJSON($api){

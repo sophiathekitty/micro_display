@@ -67,6 +67,7 @@ class Colors extends clsModel {
      * @return array returns the mysql save report
      */
     public function SaveColor($id,$color,$pallet = "general"){
+        if(is_null($this->LoadColor($id))) return $this->Save(['id'=>$id,'color'=>$color,'pallet'=>$color]);
         return $this->Save(['id'=>$id,'color'=>$color,'pallet'=>$color],['id'=>$id]);
     }
     /**

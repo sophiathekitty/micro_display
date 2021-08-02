@@ -68,18 +68,19 @@ function SyncColorPallets(){
                 if(is_array($color)){
                     if(count($color) == 2){
                         Colors::SetColor($id."_min",$color[0],$pallet);
-                        echo "$pallet - $id/_min - $color[0] ".clsDB::$db_g->get_err()."\n";
+                        echo "$pallet - $id\_min - $color[0] ".clsDB::$db_g->get_err()."\n";
                         Colors::SetColor($id."_max",$color[1],$pallet);
-                        echo "$pallet - $id/_max - $color[1] ".clsDB::$db_g->get_err()."\n";
+                        echo "$pallet - $id\_max - $color[1] ".clsDB::$db_g->get_err()."\n";
                     } else {
                         for($i = 0; $i < count($color); $i++){
                             Colors::SetColor($id."_".$i,$color[$i],$pallet);
-                            echo "$pallet - $id/_$i - $color[$i] ".clsDB::$db_g->get_err()."\n";
+                            echo "$pallet - $id\_$i - $color[$i] ".clsDB::$db_g->get_err()."\n";
                         }
                     }
                 } else {
                     Colors::SetColor($id,$color,$pallet);
                     echo "$pallet - $id - $color ".clsDB::$db_g->get_err()."\n";
+                    echo clsDB::$db_g->last_sql."\n";
                 }
             }
         } else {
