@@ -1,8 +1,11 @@
 <?php
 function SyncRooms(){
+    echo "SyncRooms?\n";
     if(Settings::LoadSettingsVar('main',0)) return null;
+    echo "Not hub...\n";
     $hub = Servers::GetHub();
     if(is_null($hub)) return null;
+    echo "hub found...\n";
     $url = "http://".$hub['url']."/api/rooms/";
     //$url = "http://".$hub['url']."/api/rooms/?simple=1";
     //$url = "http://".$hub['url']."/api/rooms/?room_id=".Settings::LoadSettingsVar('room_id');
