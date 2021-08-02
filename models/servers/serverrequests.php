@@ -60,6 +60,7 @@ class ServerRequests extends clsModel{
     public static function LoadRemoteJSON($mac_address,$api){
         $server = Servers::ServerMacAddress($mac_address);
         $url = "http://".$server['url'].$api;
+        echo "LoadRemoteJSON: $url\n";
         $time_before = microtime(true);
         $content=@file_get_contents($url);
         $time_after = microtime(true);

@@ -7,6 +7,7 @@ function SyncRooms(){
     if(is_null($hub)) return null;
     echo "hub found...\n";
     $url = "http://".$hub['url']."/api/rooms/";
+    echo "url: $url \n";
     //$url = "http://".$hub['url']."/api/rooms/?simple=1";
     //$url = "http://".$hub['url']."/api/rooms/?room_id=".Settings::LoadSettingsVar('room_id');
     return SyncRoomUrl($url);
@@ -21,7 +22,8 @@ function SyncRoom(){
 function SyncRoomUrl($url){
     $info = file_get_contents($url);
     $data = json_decode($info,true);
-    //print_r($data);
+    print_r($data);
+    echo "\n";
     if(isset($data['rooms'])){
         foreach($data['rooms'] as $room){
             // save room

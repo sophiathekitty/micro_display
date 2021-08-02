@@ -58,7 +58,7 @@ function ColorPalletStamp($p){
 function SyncColorPallets(){
     echo "Sync Colors?\n";
     if(Servers::IsHub()) return;
-    echo "not hub...";
+    echo "not hub...\n";
     $pallets = ServerRequests::LoadHubJSON("/api/colors/?pallet=1");
     print_r($pallets);
     foreach($pallets['pallet'] as $pallet => $colors){
