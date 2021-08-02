@@ -22,8 +22,8 @@ function SyncRoom(){
 function SyncRoomUrl($url){
     $info = file_get_contents($url);
     $data = json_decode($info,true);
-    print_r($data);
-    echo "\n";
+    //print_r($data);
+    //echo "\n";
     if(isset($data['rooms'])){
         foreach($data['rooms'] as $room){
             // save room
