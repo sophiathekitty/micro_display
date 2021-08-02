@@ -52,9 +52,9 @@ function IncludeFolder($path){
         //echo "<br><i>$file</i> ".is_dir($path.$file)."  ".is_dir($file."/")." <br>";
         // IF IT IS NOT A FOLDER, AND ONLY IF IT IS A .php WE ACCESS IT
         if(!is_dir($file) && strpos($file, '.php')>0 && is_file($path.$file)) { 
-            echo "Require: $path$file\n";
+            //echo "Require: $path$file\n";
             require_once($path.$file);
-            echo "included\n";
+            //echo "included\n";
         } elseif(is_dir($path.$file) && $file != ".." && $file != "."){
             IncludeFolder($path.$file."/");
         }
