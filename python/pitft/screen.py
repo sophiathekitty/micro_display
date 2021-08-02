@@ -48,8 +48,6 @@ bottom_saved = False
 #font_weather = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 82)
 
 # Get drawing object to draw on image.
-#tent = Garden(7,"Vegetation Tent","veg")
-#closet = Garden(8,"Flower Closet","flower")
 #clock = Clock()
 #weather = Weather()
 

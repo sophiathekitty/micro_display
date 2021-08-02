@@ -1,7 +1,7 @@
 <?php
 
 //echo "0.1\n";
-
+//echo "main 01\n";
 if(!isset($root_path)){
     $root_path = "";
     $i = 0;
@@ -22,24 +22,27 @@ IncludeFolder($root_path."includes/utils/");
 require_once($root_path."settings.php");
 $db = new clsDB($db_info['database'], $db_info['username'], $db_info['password']);
 
-//echo "0.4\n";
+//echo "0.4 $root_path \n";
 
 IncludeFolder($root_path."models/");
 IncludeFolder($root_path."modules/");
 IncludeFolder($root_path."views/");
 
-//echo "hello?\n";
+//echo "0.5\n";
 
 $plugins = FindPlugins($root_path."plugins/");
 
-//echo "0.5\n";
+//echo "0.6\n";
 
 foreach($plugins as $plugin){
+    //echo "0.6.0 $plugin\n";
     IncludeFolder($plugin."models/");
+    //echo "0.6.1 $plugin\n";
     IncludeFolder($plugin."modules/"); 
+    //echo "0.6.2 $plugin\n";
 }
 
-//echo "0.6\n";
+//echo "0.7\n";
 
 function IncludeFolder($path){
     //echo "IncludeFolder: $path \n";
@@ -102,6 +105,19 @@ function FindPluginsName($path){
     closedir($shared_models_dir);
     return $plugins;
 }
-//echo "0.7\n";
+//echo "0.8\n";
+
+function LoadJsonArray($url){
+    $info = file_get_contents($url);
+    return json_decode($info,true);
+}
+
+function endsWith( $haystack, $needle ) {
+    $length = strlen( $needle );
+    if( !$length ) {
+        return true;
+    }
+    return substr( $haystack, -$length ) === $needle;
+}
 
 ?>
