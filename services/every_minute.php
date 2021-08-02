@@ -7,9 +7,12 @@ RemoteTasks::PullRemoteTasks();
 SyncRoom();
 // find plugin services
 $plugins = FindPlugins($root_path."plugins/");
+print_r($plugins);
+echo "\n";
 define('main_already_included',true);
 foreach($plugins as $plugin){
     if(is_file($plugin."services/every_minute.php")){
+        echo "plugin: ".$plugin."services/every_minute.php\n";
         require_once($plugin."services/every_minute.php");
     }
 }
