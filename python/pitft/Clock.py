@@ -63,7 +63,7 @@ class Clock:
             return True
         return False
     def IsMorning(self):
-        sht, smt = self.sunrise.split(",")
+        sht, smt = self.sunrise.split(":")
         sh = int(sht)
         sm = int(smt)
         h = int(strftime("%-H", localtime()))
@@ -76,7 +76,7 @@ class Clock:
             return True
         return False
     def IsEvening(self):
-        sht, smt = self.sunset.split(",")
+        sht, smt = self.sunset.split(":")
         sh = int(sht)
         sm = int(smt)
         h = int(strftime("%-H", localtime()))
