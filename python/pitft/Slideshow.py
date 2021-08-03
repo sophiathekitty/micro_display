@@ -51,14 +51,15 @@ class Slideshow:
             buf = json_url.read()
             data = json.loads(buf.decode('utf-8'))
             self.room_id = data
-        with urllib.request.urlopen("http://localhost/api/rooms/?room_id={}".format(self.room_id)) as json_url:
-            buf = json_url.read()
-            data = json.loads(buf.decode('utf-8'))
-            print(data['room']['lights_on_in_room'] )
-            if(data['room']['lights_on_in_room'] == "1"):
-                self.state = "day"
-            if(data['room']['lights_on_in_room'] == "0"):
-                self.state = "night"
+            print(self.room_id)
+            with urllib.request.urlopen("http://localhost/api/rooms/?room_id={}".format(self.room_id)) as json_url:
+                buf = json_url.read()
+                data = json.loads(buf.decode('utf-8'))
+                print(data['room']['lights_on_in_room'] )
+                if(data['room']['lights_on_in_room'] == "1"):
+                    self.state = "day"
+                if(data['room']['lights_on_in_room'] == "0"):
+                    self.state = "night"
         print (self.state)
 
         if(len(self.slides) > self.index):
