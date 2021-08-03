@@ -54,6 +54,7 @@ class Slideshow:
         with urllib.request.urlopen("http://localhost/api/rooms/?room_id={}".format(self.room_id)) as json_url:
             buf = json_url.read()
             data = json.loads(buf.decode('utf-8'))
+            print(data['room']['lights_on_in_room'] )
             if(data['room']['lights_on_in_room'] == "1"):
                 self.state = "day"
             if(data['room']['lights_on_in_room'] == "0"):
