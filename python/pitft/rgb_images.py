@@ -7,13 +7,12 @@ import json
 from adafruit_rgb_display.rgb import color565
 import adafruit_rgb_display.st7789 as st7789
 from PIL import Image, ImageDraw, ImageFont
-
+from Garden import Garden
 from Clock import Clock
 from Weather import Weather
 from Slideshow import Slideshow
 from Stoner import Stoner
 from Tasks import Tasks
-
 
 # Configuration for CS and DC pins for Raspberry Pi
 cs_pin = digitalio.DigitalInOut(board.CE0)
@@ -44,6 +43,10 @@ buttonB.switch_to_input()
 display_index = 0
 display_switch = 10
 
+im_green = Image.open("null.jpg")
+im_blue = Image.open("oblivion.jpg")
+im_red = Image.open("malice.jpg")
+
 top_btn = False
 bottom_btn = False
 menu_btn = False
@@ -51,10 +54,20 @@ menu_btn = False
 top_saved = False
 bottom_saved = False
 
-#font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 24)
-#font_weather = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 82)
+font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 24)
+font_weather = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 82)
+
+# Get drawing object to draw on image.
+#tent = Garden(7,"Vegetation Tent","veg")
+#closet = Garden(8,"Flower Closet","flower")
+#clock = Clock()
+#weather = Weather()
 
 slides = Slideshow()
+#slides.AddSlide(clock,4)
+#slides.AddSlide(weather,4)
+#slides.AddSlide(closet,2)
+#slides.AddSlide(tent,3)
 slides.LoadSlides()
 stoner = Stoner()
 tasks = Tasks()
@@ -121,7 +134,7 @@ while True:
         btn_val = "Up"
         if top_btn:
             btn_val = "Down"
-        with urllib.request.urlopen("http://localhost/api/settings?name=TopButton&value={}".format(btn_val)) as json_url:
+        with urllib.request.urlopen("http://localhost/api/settings?id=TopButton&value={}".format(btn_val)) as json_url:
             buf = json_url.read()
             data = json.loads(buf.decode('utf-8'))
             top_saved = top_btn
@@ -135,7 +148,7 @@ while True:
         btn_val = "Up"
         if bottom_btn:
             btn_val = "Down"
-        with urllib.request.urlopen("http://localhost/api/settings?name=BottomButton&value={}".format(btn_val)) as json_url:
+        with urllib.request.urlopen("http://localhost/api/settings?id=BottomButton&value={}".format(btn_val)) as json_url:
             buf = json_url.read()
             data = json.loads(buf.decode('utf-8'))
             bottom_saved = bottom_btn
