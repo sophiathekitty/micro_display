@@ -92,7 +92,7 @@ class Slideshow:
             data = json.loads(buf.decode('utf-8'))
         self.slides[self.index].index = self.slide_index
         self.delay_step = 0
-        print("Slideshow Next (after) {}".format(self.index))
+        #print("Slideshow Next (after) {}".format(self.index))
     def Draw(self):
         self.Load()
         self.delay_step += 1
