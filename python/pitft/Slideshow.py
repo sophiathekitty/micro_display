@@ -132,7 +132,7 @@ class Slideshow:
         if(self.DayTime()):
             return False
         self.snooze_step += 1
-        print("snoozing")
+        #print("snoozing")
         if(self.snooze_step > self.snooze):
             return True
     def Wake(self):
