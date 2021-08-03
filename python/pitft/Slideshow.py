@@ -51,16 +51,16 @@ class Slideshow:
             buf = json_url.read()
             data = json.loads(buf.decode('utf-8'))
             self.room_id = data
-            print(self.room_id)
+            #print(self.room_id)
             with urllib.request.urlopen("http://localhost/api/rooms/?room_id={}".format(self.room_id)) as json_url:
                 buf = json_url.read()
                 data = json.loads(buf.decode('utf-8'))
-                print(data['room']['lights_on_in_room'] )
+                #print(data['room']['lights_on_in_room'] )
                 if(data['room']['lights_on_in_room'] == "1"):
                     self.state = "day"
                 if(data['room']['lights_on_in_room'] == "0"):
                     self.state = "night"
-        print (self.state)
+        #print (self.state)
 
         if(len(self.slides) > self.index):
             self.slides[self.index].index = self.slide_index
@@ -79,7 +79,7 @@ class Slideshow:
     def AddSlide(self, slide, sections = 3):
         self.slides.append(Slide(slide,sections))
     def Next(self):
-        print("Slideshow Next (before) {}".format(self.index))
+        #print("Slideshow Next (before) {}".format(self.index))
         self.index += 1
         self.slide_index = 0
         if(self.index >= len(self.slides)):
@@ -96,7 +96,7 @@ class Slideshow:
     def Draw(self):
         self.Load()
         self.delay_step += 1
-        print("Slideshow Delay Step {} / {}".format(self.delay_step,self.delay))
+        #print("Slideshow Delay Step {} / {}".format(self.delay_step,self.delay))
         if(self.delay_step > self.delay and self.index > 0):
             self.Next()
         if(self.delay_step > (self.delay * 2) and self.index == 0):
