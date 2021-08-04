@@ -47,7 +47,7 @@ class Clock:
     # time of day functions
     #
     def IsDay(self):
-        print("is day?")
+        #print("is day?")
         srht, srmt = self.sunrise.split(":")
         srh = int(srht)+1
         srm = int(srmt)
@@ -56,13 +56,13 @@ class Clock:
         ssm = int(ssmt)
         h = int(strftime("%-H", localtime()))
         m = int(strftime("%-M", localtime()))
-        print(h+" > "+srh+" and "+h+" < "+ssh)
+        #print(h+" > "+srh+" and "+h+" < "+ssh)
         if(h > srh and h < ssh):
             return True
-        print(h+" == "+srh+" and "+m+" > "+srm)
+        #print(h+" == "+srh+" and "+m+" > "+srm)
         if(h == srh and m > srm):
             return True
-        print(h+" == "+ssh+" and "+m+" < "+srm)
+        #print(h+" == "+ssh+" and "+m+" < "+srm)
         if(h == ssh and m < srm ):
             return True
         return False
@@ -86,13 +86,13 @@ class Clock:
         sm = int(smt)
         h = int(strftime("%-H", localtime()))
         m = int(strftime("%-M", localtime()))
-        print(h+" > "+(sh-1)+" and "+h+" < "+(sh+1))
+        print(str(h)+" > "+str(sh-1)+" and "+str(h)+" < "+str(sh+1))
         if(h > sh-1 and h < sh+1):
             return True
-        print(h+" == "+(sh-1)+" and "+m+" > "+sm)
+        #print(h+" == "+(sh-1)+" and "+m+" > "+sm)
         if(h == sh-1 and m > sm):
             return True
-        print(h+" == "+sh+" and "+m+" < "+sm)
+        #print(h+" == "+sh+" and "+m+" < "+sm)
         if(h == sh and m < sm ):
             return True
         return False
