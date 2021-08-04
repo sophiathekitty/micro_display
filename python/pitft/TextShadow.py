@@ -2,8 +2,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 class TextShadow:
     def __init__(self, big_size = 82, small_size = 24, med_size = 62):
-        self.font_big = ImageFont.truetype("fonts/ViceCitySans.otf", big_size)
-        self.font_med = ImageFont.truetype("fonts/ViceCitySans.otf", med_size)
+        self.font_big = ImageFont.truetype("/var/www/html/python/pitft/fonts/ViceCitySans.otf", big_size)
+        self.font_med = ImageFont.truetype("/var/www/html/python/pitft/fonts/ViceCitySans.otf", med_size)
         self.font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", small_size)
     
     #

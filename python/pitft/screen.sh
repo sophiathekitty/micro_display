@@ -7,12 +7,12 @@ while true; do
     echo "-----------------------------------"
     echo "starting python script"
     echo "-----------------------------------"
-    sudo python3 /var/www/html/python/pitft/screen.py &
+    sudo python3 /var/www/html/python/pitft/screen.py > /home/pi/screenpy.log &
     wait $!
     echo "-----------------------------------"
     echo "python script crashed (waiting)"
     echo "-----------------------------------"
-    sleep 10
+    sleep 5m
     echo "-----------------------------------"
     echo "ready to restart"
     echo "-----------------------------------"
