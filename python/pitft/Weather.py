@@ -87,5 +87,5 @@ class Weather:
         buttons = ""
         if(self.buttons):
             buttons = "_buttons"
-        icon_path = "weather/"+self.icon+buttons+".jpg"
+        icon_path = "/var/www/html/python/pitft/weather/"+self.icon+buttons+".jpg"
         return Image.open(icon_path)

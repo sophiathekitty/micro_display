@@ -114,28 +114,28 @@ class Clock:
     #
     def GetClockImage(self):
         if(self.buttons):
-            icon_path = "clock/night_buttons.jpg"
+            icon_path = "/var/www/html/python/pitft/clock/night_buttons.jpg"
             if(self.IsMorning()):
-                icon_path = "clock/morning_buttons.jpg"
+                icon_path = "/var/www/html/python/pitft/clock/morning_buttons.jpg"
             if(self.IsEvening()):
-                icon_path = "clock/evening_buttons.jpg"
+                icon_path = "/var/www/html/python/pitft/clock/evening_buttons.jpg"
             if(self.IsDay()):
-                icon_path = "clock/day_buttons.jpg"
+                icon_path = "/var/www/html/python/pitft/clock/day_buttons.jpg"
         else:
-            icon_path = "clock/night.jpg"
+            icon_path = "/var/www/html/python/pitft/clock/night.jpg"
             if(self.IsDay()):
-                icon_path = "clock/day.jpg"
+                icon_path = "/var/www/html/python/pitft/clock/day.jpg"
             if(self.IsMorning()):
-                icon_path = "clock/morning.jpg"
+                icon_path = "/var/www/html/python/pitft/clock/morning.jpg"
             if(self.IsEvening()):
-                icon_path = "clock/evening.jpg"
+                icon_path = "/var/www/html/python/pitft/clock/evening.jpg"
         return Image.open(icon_path)
     # Sunrise image
     def GetSunriseImage(self):
         if(self.buttons):
-            icon_path = "clock/sunrise_buttons.jpg"
+            icon_path = "/var/www/html/python/pitft/clock/sunrise_buttons.jpg"
         else:
-            icon_path = "clock/sunrise.jpg"
+            icon_path = "/var/www/html/python/pitft/clock/sunrise.jpg"
         return Image.open(icon_path)
     #
     # Draw Time
