@@ -48,10 +48,10 @@ class Clock:
     #
     def IsDay(self):
         print("is day?")
-        srht, srmt = self.sunrise.split(",")
+        srht, srmt = self.sunrise.split(":")
         srh = int(srht)+1
         srm = int(srmt)
-        ssht, ssmt = self.sunset.split(",")
+        ssht, ssmt = self.sunset.split(":")
         ssh = int(ssht)-1
         ssm = int(ssmt)
         h = int(strftime("%-H", localtime()))
