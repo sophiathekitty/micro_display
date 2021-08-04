@@ -115,19 +115,19 @@ class Clock:
     def GetClockImage(self):
         if(self.buttons):
             icon_path = "clock/night_buttons.jpg"
-            if(self.IsMorning):
+            if(self.IsMorning()):
                 icon_path = "clock/morning_buttons.jpg"
-            if(self.IsEvening):
+            if(self.IsEvening()):
                 icon_path = "clock/evening_buttons.jpg"
-            if(self.IsDay):
+            if(self.IsDay()):
                 icon_path = "clock/day_buttons.jpg"
         else:
             icon_path = "clock/night.jpg"
-            if(self.IsDay):
+            if(self.IsDay()):
                 icon_path = "clock/day.jpg"
-            if(self.IsMorning):
+            if(self.IsMorning()):
                 icon_path = "clock/morning.jpg"
-            if(self.IsEvening):
+            if(self.IsEvening()):
                 icon_path = "clock/evening.jpg"
         return Image.open(icon_path)
     # Sunrise image
