@@ -7,7 +7,7 @@ while true; do
     echo "-----------------------------------"
     echo "starting python script"
     echo "-----------------------------------"
-    sudo python3 /var/www/html/python/pitft/screen.py > /home/pi/screenpy.log &
+    sudo python3 /var/www/html/python/pitft/screen.py & > /home/pi/screenpy.log
     wait $!
     echo "-----------------------------------"
     echo "python script crashed (waiting)"
