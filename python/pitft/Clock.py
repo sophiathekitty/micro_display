@@ -80,13 +80,13 @@ class Clock:
             return True
         return False
     def IsEvening(self):
-        print ("is evening?")
+        #print ("is evening?")
         sht, smt = self.sunset.split(":")
         sh = int(sht)
         sm = int(smt)
         h = int(strftime("%-H", localtime()))
         m = int(strftime("%-M", localtime()))
-        print(str(h)+" > "+str(sh-1)+" and "+str(h)+" < "+str(sh+1))
+        #print(str(h)+" > "+str(sh-1)+" and "+str(h)+" < "+str(sh+1))
         if(h > sh-1 and h < sh+1):
             return True
         #print(h+" == "+(sh-1)+" and "+m+" > "+sm)
