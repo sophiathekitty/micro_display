@@ -13,8 +13,8 @@ import json
 
 class Stoner:
     def __init__(self):
-        self.font_big = ImageFont.truetype("fonts/ViceCitySans.otf", 98)
-        self.font_small = ImageFont.truetype("fonts/ViceCitySans.otf", 44)
+        self.font_big = ImageFont.truetype("/var/www/html/python/pitft/fonts/ViceCitySans.otf", 98)
+        self.font_small = ImageFont.truetype("/var/www/html/python/pitft/fonts/ViceCitySans.otf", 44)
         self.colorIndex = 0
         self.colors = ["#f26441","#f27f41","#f29441","#f2ae41","#f2dd41","#ecf241","#ccf241","#a8f241","#85f241","#6df241","#44f241","#64f241","#7ff241","#94f241","#c0f241","#e3f241","#f2da41","#f2b441","#f2a041","#f27441"]
         self.color2Index = round(len(self.colors) / 2)
@@ -40,10 +40,10 @@ class Stoner:
             return self.Draw420()
         if(self.StonerTime() == 710):
             return self.Draw710()
-        return Image.open("bud.jpg")
+        return Image.open("/var/www/html/python/pitft/bud.jpg")
         
     def Draw420(self):
-        im = Image.open("bud.jpg")
+        im = Image.open("/var/www/html/python/pitft/bud.jpg")
         draw = ImageDraw.Draw(im)
         x = 20
         y = 10
@@ -63,7 +63,7 @@ class Stoner:
         draw.text((x,y), "Blaze It!!", font=self.font_small, fill=self.colors[self.color2Index])
         return im
     def Draw710(self):
-        im = Image.open("wax.jpg")
+        im = Image.open("/var/www/html/python/pitft/wax.jpg")
         draw = ImageDraw.Draw(im)
         x = 50
         y = 10

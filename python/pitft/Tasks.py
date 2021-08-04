@@ -74,13 +74,13 @@ class Tasks:
     # show the notifications
     def Draw(self):
         if len(self.tasks) == 0:
-            return Image.open("nulltask.jpg")
+            return Image.open("/var/www/html/python/pitft/nulltask.jpg")
         if(self.confirm_button):
-            im = Image.open("task_complete.jpg")
+            im = Image.open("/var/www/html/python/pitft/task_complete.jpg")
         elif(self.skip_button):
-            im = Image.open("task_complete.jpg")
+            im = Image.open("/var/www/html/python/pitft/task_complete.jpg")
         else:
-            im = Image.open("task.jpg")
+            im = Image.open("/var/www/html/python/pitft/task.jpg")
 
         draw = ImageDraw.Draw(im)
         x = 50
